@@ -31,6 +31,9 @@
       --crimson-700: #7A1526;
       --claude-orange: #CC785C;
       --claude-orange-light: #E89578;
+      --green-buy: #10B981;
+      --green-buy-dark: #059669;
+      --green-buy-light: #34D399;
       --text-dark: #1a1a1a;
       --text-muted: #5a5a5a;
       --font-display: 'Cormorant Garamond', Georgia, serif;
@@ -43,39 +46,50 @@
     body { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--text-dark); background: var(--cream-50); overflow-x: hidden; }
     img, svg { max-width: 100%; display: block; }
 
-    /* ===== URGENCY TOPBAR (evergreen 72h por visitante) ===== */
+    /* ===== URGENCY TOPBAR (primeiros 100 alunos — vagas decrementam) ===== */
     .urgency-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 10000; background: linear-gradient(135deg, var(--crimson-700) 0%, var(--crimson-600) 100%); color: #fff; padding: 11px 18px; text-align: center; font-family: var(--font-body); font-size: 0.94rem; line-height: 1.45; box-shadow: 0 3px 16px rgba(123, 21, 38, 0.45); letter-spacing: 0.005em; }
     .urgency-bar strong { font-weight: 700; color: #fff; }
-    .urgency-bar__counter { display: inline-block; font-family: var(--font-mono); font-weight: 700; background: rgba(255, 255, 255, 0.16); padding: 3px 11px; border-radius: 3px; margin: 0 3px; font-variant-numeric: tabular-nums; }
-    .urgency-bar.expired { background: linear-gradient(135deg, var(--navy-900), var(--navy-800)); }
+    .urgency-bar__counter { display: inline-block; font-family: var(--font-display); font-weight: 700; background: rgba(255, 255, 255, 0.18); padding: 2px 10px; border-radius: 4px; margin: 0 3px; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
     .urgency-bar__short { display: none; }
     body { padding-top: 48px; }
     @media (max-width: 640px) {
-      .urgency-bar { font-size: 0.78rem; padding: 9px 12px; line-height: 1.4; }
-      .urgency-bar__counter { padding: 2px 8px; margin: 0 2px; }
+      .urgency-bar { font-size: 0.82rem; padding: 10px 12px; line-height: 1.4; }
+      .urgency-bar__counter { padding: 2px 8px; margin: 0 2px; font-size: 0.82rem; }
       .urgency-bar__full { display: none; }
       .urgency-bar__short { display: inline; }
-      body { padding-top: 42px; }
+      body { padding-top: 44px; }
     }
 
     /* Scroll progress */
     .scroll-progress { position: fixed; top: 48px; left: 0; width: 100%; height: 3px; background: transparent; z-index: 9999; }
-    @media (max-width: 640px) { .scroll-progress { top: 42px; } }
+    @media (max-width: 640px) { .scroll-progress { top: 44px; height: 2px; } }
     .scroll-progress__bar { height: 100%; background: linear-gradient(90deg, var(--gold-500), var(--gold-400), var(--gold-300)); transform: scaleX(0); transform-origin: left; will-change: transform; }
 
     .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
     .container--narrow { max-width: 760px; }
+    @media (max-width: 640px) {
+      .container { padding: 0 20px; }
+    }
 
     section { padding: 96px 0; position: relative; }
     @media (max-width: 768px) { section { padding: 64px 0; } }
+    @media (max-width: 640px) { section { padding: 56px 0; } }
 
     .section-label { display: inline-block; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-500); margin-bottom: 20px; }
+    @media (max-width: 640px) {
+      .section-label { font-size: 0.68rem; letter-spacing: 0.14em; margin-bottom: 14px; }
+    }
 
-    h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; letter-spacing: -0.015em; font-weight: 700; }
-    h2 { font-size: clamp(1.9rem, 4.5vw, 2.8rem); margin-bottom: 24px; }
-    h3 { font-size: clamp(1.35rem, 3vw, 1.75rem); margin-bottom: 16px; }
-    p { margin-bottom: 18px; color: var(--text-muted); font-size: 1.05rem; }
+    h1, h2, h3 { font-family: var(--font-display); line-height: 1.18; letter-spacing: -0.015em; font-weight: 700; }
+    h2 { font-size: clamp(1.65rem, 5.2vw, 2.8rem); margin-bottom: 22px; }
+    h3 { font-size: clamp(1.25rem, 3.6vw, 1.75rem); margin-bottom: 16px; }
+    p { margin-bottom: 18px; color: var(--text-muted); font-size: 1.02rem; }
     p strong { color: var(--text-dark); }
+    @media (max-width: 640px) {
+      body { font-size: 0.98rem; line-height: 1.65; }
+      p { font-size: 0.98rem; line-height: 1.65; margin-bottom: 16px; }
+      h1, h2, h3 { line-height: 1.22; letter-spacing: -0.01em; }
+    }
     em.gold { font-style: normal; background: linear-gradient(135deg, var(--gold-300), var(--gold-400), var(--gold-500)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     em.orange { font-style: normal; color: var(--claude-orange); font-weight: 600; }
 
@@ -89,16 +103,35 @@
     .hero { min-height: calc(100vh - 48px); display: flex; align-items: center; padding: 100px 0 80px; background: radial-gradient(ellipse 600px 400px at 50% 40%, rgba(212, 168, 67, 0.06) 0%, transparent 70%), radial-gradient(ellipse 800px 600px at 20% 80%, rgba(17, 33, 61, 0.6) 0%, transparent 60%), radial-gradient(ellipse 800px 600px at 80% 20%, rgba(17, 33, 61, 0.4) 0%, transparent 60%), linear-gradient(135deg, var(--navy-950) 0%, var(--navy-900) 40%, var(--navy-800) 100%); overflow: hidden; }
     .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 0%, rgba(7, 13, 26, 0.7) 100%); z-index: 1; pointer-events: none; }
     .hero__content { position: relative; z-index: 2; max-width: 820px; margin: 0 auto; text-align: center; padding: 0 24px; }
-    .hero__title { font-family: var(--font-display); font-size: clamp(2.25rem, 5.5vw, 3.9rem); font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; color: #fff; margin-bottom: 28px; }
+    .hero__title { font-family: var(--font-display); font-size: clamp(1.9rem, 7.2vw, 3.9rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; color: #fff; margin-bottom: 26px; text-wrap: balance; }
     .hero__title em { font-style: normal; background: linear-gradient(135deg, var(--gold-300), var(--gold-400), var(--gold-500)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero__subtitle { font-size: clamp(1.05rem, 2.2vw, 1.2rem); line-height: 1.7; color: rgba(255, 255, 255, 0.72); max-width: 700px; margin: 0 auto 44px; }
-    .hero__cta { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-body); font-size: 1.08rem; font-weight: 700; color: var(--navy-950); background: linear-gradient(135deg, var(--gold-300), var(--gold-400)); padding: 18px 42px; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; transition: transform 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 6px 24px rgba(212, 168, 67, 0.25); }
+    .hero__subtitle { font-size: clamp(1rem, 2.4vw, 1.2rem); line-height: 1.65; color: rgba(255, 255, 255, 0.75); max-width: 700px; margin: 0 auto 40px; }
+    .hero__cta { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-family: var(--font-body); font-size: 1.05rem; font-weight: 700; color: var(--navy-950); background: linear-gradient(135deg, var(--gold-300), var(--gold-400)); padding: 18px 40px; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; transition: transform 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 6px 24px rgba(212, 168, 67, 0.25); min-height: 56px; }
     .hero__cta:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(212, 168, 67, 0.38); }
-    .hero__cta-price { font-family: var(--font-mono); font-size: 0.9rem; color: rgba(255, 255, 255, 0.55); margin-top: 20px; letter-spacing: 0.05em; }
+    .hero__cta-price { font-family: var(--font-mono); font-size: 0.85rem; color: rgba(255, 255, 255, 0.55); margin-top: 18px; letter-spacing: 0.03em; }
+    @media (max-width: 640px) {
+      .hero { padding: 72px 0 56px; min-height: auto; }
+      .hero__content { padding: 0 20px; }
+      .hero__title { margin-bottom: 20px; }
+      .hero__title br { display: none; }
+      .hero__subtitle { margin: 0 auto 32px; }
+      .hero__cta { width: 100%; padding: 18px 24px; font-size: 1rem; }
+      .hero__cta-price { font-size: 0.8rem; margin-top: 14px; }
+      .claude-badge { padding: 8px 14px; font-size: 0.65rem; margin-bottom: 20px; }
+    }
 
     /* ================ SOCIAL PROOF BAR ================ */
     .social-proof { padding: 22px 0; background: linear-gradient(135deg, var(--gold-500), var(--gold-400), var(--gold-300)); text-align: center; }
-    .social-proof p { margin: 0; color: var(--navy-950); font-weight: 600; font-size: 0.95rem; letter-spacing: 0.02em; }
+    .social-proof p { margin: 0; color: var(--navy-950); font-weight: 600; font-size: 0.95rem; letter-spacing: 0.02em; line-height: 1.5; }
+    .pro-disclosure { background: var(--navy-800); padding: 16px 0; text-align: center; border-bottom: 1px solid rgba(212, 168, 67, 0.2); }
+    .pro-disclosure p { margin: 0; color: rgba(255, 255, 255, 0.85); font-size: 0.92rem; line-height: 1.55; max-width: 760px; margin: 0 auto; }
+    .pro-disclosure strong { color: var(--gold-400); font-weight: 600; }
+    @media (max-width: 640px) {
+      .social-proof { padding: 18px 0; }
+      .social-proof p { font-size: 0.82rem; padding: 0 16px; letter-spacing: 0; }
+      .pro-disclosure { padding: 14px 0; }
+      .pro-disclosure p { font-size: 0.85rem; padding: 0 20px; line-height: 1.5; }
+    }
 
     /* ================ AUTORIDADE ================ */
     .authority { background: var(--cream-50); padding: 72px 0; }
@@ -107,9 +140,18 @@
     .authority__head p { font-size: 1rem; max-width: 580px; margin: 0 auto; }
     .authority__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; max-width: 880px; margin: 0 auto; }
     .authority__item { background: #fff; padding: 20px 22px; border-left: 3px solid var(--gold-400); border-radius: 2px; box-shadow: 0 2px 12px rgba(7, 13, 26, 0.04); }
-    .authority__item strong { display: block; color: var(--navy-900); font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; }
-    .authority__item span { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
-    .authority__note { text-align: center; margin-top: 32px; font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em; color: var(--gold-500); text-transform: uppercase; }
+    .authority__item strong { display: block; color: var(--navy-900); font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; line-height: 1.25; }
+    .authority__item span { font-size: 0.85rem; color: var(--text-muted); font-style: italic; line-height: 1.4; display: block; }
+    .authority__note { text-align: center; margin-top: 32px; font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em; color: var(--gold-500); text-transform: uppercase; line-height: 1.5; }
+    @media (max-width: 640px) {
+      .authority { padding: 56px 0; }
+      .authority__head { margin-bottom: 32px; }
+      .authority__grid { gap: 12px; }
+      .authority__item { padding: 18px 20px; }
+      .authority__item strong { font-size: 1.02rem; }
+      .authority__item span { font-size: 0.82rem; }
+      .authority__note { font-size: 0.7rem; margin-top: 26px; padding: 0 12px; letter-spacing: 0.06em; }
+    }
 
     /* ================ DOR ================ */
     .pain { background: var(--cream-100); }
@@ -117,7 +159,12 @@
     .pain__narrative li { list-style: none; padding: 14px 0 14px 32px; position: relative; border-bottom: 1px solid var(--cream-200); }
     .pain__narrative li:last-child { border-bottom: none; }
     .pain__narrative li::before { content: '→'; position: absolute; left: 0; color: var(--crimson-600); font-weight: 700; font-family: var(--font-mono); }
-    .pain__punch { margin-top: 40px; padding: 28px 32px; border-left: 4px solid var(--crimson-600); background: #fff; box-shadow: 0 4px 24px rgba(7, 13, 26, 0.06); font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--navy-900); line-height: 1.4; }
+    .pain__punch { margin-top: 36px; padding: 26px 30px; border-left: 4px solid var(--crimson-600); background: #fff; box-shadow: 0 4px 24px rgba(7, 13, 26, 0.06); font-family: var(--font-display); font-size: clamp(1.15rem, 3.6vw, 1.5rem); font-weight: 600; color: var(--navy-900); line-height: 1.4; }
+    @media (max-width: 640px) {
+      .pain__narrative { font-size: 1rem; }
+      .pain__narrative li { padding: 12px 0 12px 26px; font-size: 0.98rem; line-height: 1.55; }
+      .pain__punch { padding: 22px 20px; margin-top: 28px; line-height: 1.35; }
+    }
 
     /* ================ AGITAÇÃO ================ */
     .agitation { background: var(--cream-50); }
@@ -125,8 +172,15 @@
     .agitation__card { background: #fff; padding: 28px; border-top: 3px solid var(--crimson-600); box-shadow: 0 4px 20px rgba(7, 13, 26, 0.05); }
     .agitation__card h4 { font-family: var(--font-display); font-size: 1.25rem; color: var(--navy-900); margin-bottom: 10px; font-weight: 600; }
     .agitation__card p { font-size: 0.98rem; margin: 0; }
-    .agitation__warning { margin-top: 44px; padding: 32px; background: var(--navy-900); color: rgba(255,255,255,0.85); text-align: center; border-radius: 4px; }
+    .agitation__warning { margin-top: 44px; padding: 32px; background: var(--navy-900); color: rgba(255,255,255,0.85); text-align: center; border-radius: 4px; font-size: 1rem; line-height: 1.6; }
     .agitation__warning strong { color: var(--gold-400); }
+    @media (max-width: 640px) {
+      .agitation__cards { gap: 14px; margin-top: 32px; }
+      .agitation__card { padding: 22px 20px; }
+      .agitation__card h4 { font-size: 1.1rem; margin-bottom: 8px; }
+      .agitation__card p { font-size: 0.94rem; line-height: 1.55; }
+      .agitation__warning { padding: 24px 20px; margin-top: 32px; font-size: 0.95rem; line-height: 1.55; text-align: left; }
+    }
 
     /* ================ SOLUÇÃO ================ */
     .solution { background: var(--navy-900); color: rgba(255, 255, 255, 0.88); }
@@ -139,10 +193,19 @@
     .layers { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 48px; }
     .layer { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(212, 168, 67, 0.18); padding: 36px 28px; border-radius: 4px; transition: transform 0.3s ease, border-color 0.3s ease; }
     .layer:hover { transform: translateY(-4px); border-color: rgba(212, 168, 67, 0.45); }
-    .layer__icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .layer__icon { font-size: 2.25rem; margin-bottom: 12px; line-height: 1; }
     .layer__title { font-family: var(--font-display); font-size: 1.4rem; color: #fff; margin-bottom: 12px; font-weight: 600; }
-    .layer__subtitle { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold-400); margin-bottom: 14px; }
+    .layer__subtitle { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold-400); margin-bottom: 10px; }
     .layer__desc { color: rgba(255, 255, 255, 0.72); font-size: 0.98rem; line-height: 1.65; margin: 0; }
+    @media (max-width: 640px) {
+      .layer { padding: 26px 22px; }
+      .layer__icon { font-size: 2rem; margin-bottom: 10px; }
+      .layer__title { font-size: 1.2rem; }
+      .layer__desc { font-size: 0.95rem; line-height: 1.55; }
+      .solution__result { margin-top: 40px; padding: 24px 20px; }
+      .solution__result p { font-size: 1.05rem; line-height: 1.45; }
+      .solution__mechanism-tag { font-size: 0.64rem; padding: 6px 12px; }
+    }
     .solution__result { margin-top: 56px; text-align: center; padding: 32px; background: rgba(212, 168, 67, 0.08); border: 1px solid rgba(212, 168, 67, 0.3); border-radius: 4px; }
     .solution__result p { color: #fff; font-size: 1.2rem; margin: 0; font-family: var(--font-display); font-weight: 500; }
     .solution__result strong { color: var(--gold-400); }
@@ -154,20 +217,55 @@
     .how__number { position: absolute; top: -18px; left: 28px; width: 36px; height: 36px; background: linear-gradient(135deg, var(--claude-orange), var(--claude-orange-light)); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-weight: 700; font-size: 0.95rem; box-shadow: 0 4px 14px rgba(204, 120, 92, 0.35); }
     .how__step h4 { font-family: var(--font-display); font-size: 1.3rem; color: var(--navy-900); margin: 14px 0 10px; font-weight: 600; }
     .how__step p { font-size: 0.96rem; margin: 0; line-height: 1.65; }
-    .how__highlight { margin-top: 44px; padding: 28px 32px; background: rgba(204, 120, 92, 0.06); border: 1px solid rgba(204, 120, 92, 0.2); border-left: 4px solid var(--claude-orange); border-radius: 2px; font-family: var(--font-display); font-size: 1.3rem; line-height: 1.5; color: var(--navy-900); text-align: center; }
+    .how__highlight { margin-top: 44px; padding: 26px 28px; background: rgba(204, 120, 92, 0.06); border: 1px solid rgba(204, 120, 92, 0.2); border-left: 4px solid var(--claude-orange); border-radius: 2px; font-family: var(--font-display); font-size: clamp(1.05rem, 3.4vw, 1.3rem); line-height: 1.5; color: var(--navy-900); text-align: center; }
     .how__highlight strong { color: var(--claude-orange); }
+    @media (max-width: 640px) {
+      .how__highlight { padding: 22px 20px; margin-top: 32px; line-height: 1.4; text-align: left; }
+      .how__step { padding: 26px 22px 24px; }
+      .how__step h4 { font-size: 1.15rem; }
+      .how__number { width: 32px; height: 32px; font-size: 0.88rem; top: -16px; left: 22px; }
+    }
 
     /* ================ INCLUÍDO ================ */
     .included { background: var(--cream-100); }
+    .included-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 40px; background: #fff; padding: 24px 20px; border-radius: 6px; box-shadow: 0 6px 28px rgba(7, 13, 26, 0.06); }
+    .included-strip__item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; padding: 8px 4px; border-right: 1px solid var(--cream-200); }
+    .included-strip__item:last-child { border-right: none; }
+    .included-strip__emoji { font-size: 1.5rem; line-height: 1; margin-bottom: 4px; }
+    .included-strip__item strong { font-family: var(--font-display); font-size: 1.8rem; color: var(--navy-900); font-weight: 700; line-height: 1; }
+    .included-strip__label { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; color: var(--text-muted); text-transform: uppercase; line-height: 1.3; }
+    .included-expand { margin-top: 24px; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 20px rgba(7, 13, 26, 0.05); }
+    .included-expand summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 28px; cursor: pointer; list-style: none; font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--navy-900); border-left: 3px solid var(--gold-400); }
+    .included-expand summary::-webkit-details-marker { display: none; }
+    .included-expand__toggle { font-family: var(--font-mono); font-size: 1.6rem; color: var(--gold-500); transition: transform 0.3s ease; line-height: 1; }
+    .included-expand[open] .included-expand__toggle { transform: rotate(45deg); }
+    .included-expand .categories { padding: 0 24px 28px; margin-top: 20px; }
+    @media (max-width: 640px) {
+      .included-strip { grid-template-columns: repeat(5, 1fr); gap: 4px; padding: 18px 10px; }
+      .included-strip__item { padding: 6px 2px; gap: 2px; }
+      .included-strip__emoji { font-size: 1.1rem; margin-bottom: 2px; }
+      .included-strip__item strong { font-size: 1.25rem; }
+      .included-strip__label { font-size: 0.56rem; letter-spacing: 0.04em; }
+      .included-expand summary { padding: 16px 20px; font-size: 0.98rem; min-height: 56px; }
+      .included-expand__toggle { font-size: 1.4rem; width: 44px; height: 44px; display: grid; place-items: center; margin-right: -10px; }
+      .included-expand .categories { padding: 0 16px 20px; grid-template-columns: 1fr; gap: 14px; }
+    }
     .categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 48px; }
     .category { background: #fff; padding: 32px; border-radius: 4px; border-top: 3px solid var(--gold-400); box-shadow: 0 6px 28px rgba(7, 13, 26, 0.06); }
-    .category__header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--cream-200); }
-    .category__emoji { font-size: 1.6rem; }
-    .category__title { font-family: var(--font-display); font-size: 1.35rem; color: var(--navy-900); margin: 0; font-weight: 700; }
-    .category__count { font-family: var(--font-mono); font-size: 0.75rem; color: var(--gold-500); font-weight: 600; }
+    .category__header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--cream-200); }
+    .category__emoji { font-size: 1.6rem; line-height: 1; }
+    .category__title { font-family: var(--font-display); font-size: 1.35rem; color: var(--navy-900); margin: 0; font-weight: 700; line-height: 1.2; }
+    .category__count { font-family: var(--font-mono); font-size: 0.75rem; color: var(--gold-500); font-weight: 600; white-space: nowrap; }
     .category__list { list-style: none; padding: 0; margin: 0; }
-    .category__list li { padding: 6px 0; font-size: 0.94rem; color: var(--text-muted); }
+    .category__list li { padding: 6px 0; font-size: 0.94rem; color: var(--text-muted); line-height: 1.5; }
     .category__list li::before { content: '✓ '; color: var(--gold-500); font-weight: 700; margin-right: 4px; }
+    @media (max-width: 640px) {
+      .category { padding: 26px 22px; }
+      .category__emoji { font-size: 1.4rem; }
+      .category__title { font-size: 1.18rem; hyphens: auto; -webkit-hyphens: auto; overflow-wrap: anywhere; }
+      .category__count { font-size: 0.7rem; }
+      .category__list li { font-size: 0.92rem; padding: 5px 0; hyphens: auto; -webkit-hyphens: auto; overflow-wrap: anywhere; }
+    }
 
     /* ================ BÔNUS ================ */
     .bonus { background: var(--navy-800); color: rgba(255, 255, 255, 0.85); position: relative; }
@@ -182,6 +280,14 @@
     .bonus__card p { color: rgba(255, 255, 255, 0.72); font-size: 0.96rem; line-height: 1.6; margin-bottom: 16px; }
     .bonus__value { display: inline-block; font-family: var(--font-mono); font-size: 0.82rem; color: var(--gold-400); padding: 6px 12px; background: rgba(212, 168, 67, 0.08); border-radius: 2px; }
     .bonus__value s { color: rgba(212, 168, 67, 0.5); margin-right: 8px; }
+    @media (max-width: 640px) {
+      .bonus__card { padding: 26px 22px 24px; }
+      .bonus__ribbon { position: static; display: inline-block; margin: 0 0 14px; padding: 5px 12px; font-size: 0.66rem; }
+      .bonus__card h4 { padding-right: 0; font-size: 1.18rem; line-height: 1.3; margin-bottom: 12px; hyphens: auto; -webkit-hyphens: auto; overflow-wrap: anywhere; }
+      .bonus__card p { font-size: 0.94rem; line-height: 1.55; margin-bottom: 14px; }
+      .bonus__rotating-tag { font-size: 0.62rem; padding: 4px 8px; margin-bottom: 12px; }
+      .bonus__value { font-size: 0.78rem; padding: 5px 10px; }
+    }
 
     /* ================ OFERTA / PREÇO ================ */
     .offer { background: linear-gradient(135deg, var(--cream-50) 0%, var(--cream-100) 100%); text-align: center; }
@@ -199,58 +305,113 @@
     .offer__price { font-family: var(--font-display); font-size: clamp(4rem, 10vw, 6.5rem); font-weight: 700; color: var(--navy-900); line-height: 1; margin-bottom: 8px; letter-spacing: -0.04em; }
     .offer__price sup { font-size: 0.4em; vertical-align: super; margin-right: 4px; color: var(--gold-500); }
     .offer__price-note { font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-muted); margin-bottom: 32px; }
-    .offer__cta { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-body); font-size: 1.1rem; font-weight: 700; color: var(--navy-950); background: linear-gradient(135deg, var(--gold-300), var(--gold-400)); padding: 20px 48px; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; box-shadow: 0 8px 32px rgba(212, 168, 67, 0.3); transition: transform 0.25s ease, box-shadow 0.25s ease; }
-    .offer__cta:hover { transform: translateY(-3px); box-shadow: 0 12px 44px rgba(212, 168, 67, 0.42); }
+    .offer__cta { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-family: var(--font-body); font-size: 1.08rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, var(--green-buy) 0%, var(--green-buy-dark) 100%); padding: 20px 44px; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; box-shadow: 0 8px 32px rgba(16, 185, 129, 0.35), 0 0 0 1px rgba(16, 185, 129, 0.15); transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease; min-height: 58px; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.08); }
+    .offer__cta:hover { transform: translateY(-3px); box-shadow: 0 14px 44px rgba(16, 185, 129, 0.48), 0 0 0 1px rgba(16, 185, 129, 0.25); background: linear-gradient(135deg, var(--green-buy-light) 0%, var(--green-buy) 100%); }
     .offer__payment { font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-muted); margin-top: 20px; }
-    .offer__comparison { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--cream-200); font-size: 0.95rem; color: var(--text-muted); }
+    .offer__comparison { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--cream-200); font-size: 0.95rem; color: var(--text-muted); }
     .offer__comparison strong { color: var(--navy-900); }
+    .offer__guarantee-mini { display: flex; align-items: flex-start; gap: 14px; margin-top: 28px; padding: 20px; background: rgba(212, 168, 67, 0.08); border: 1px solid rgba(212, 168, 67, 0.35); border-radius: 6px; text-align: left; }
+    .offer__guarantee-seal { flex-shrink: 0; width: 44px; height: 44px; background: linear-gradient(135deg, var(--gold-300), var(--gold-500)); color: var(--navy-950); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.4rem; box-shadow: 0 4px 14px rgba(212, 168, 67, 0.3); }
+    .offer__guarantee-text { flex: 1; }
+    .offer__guarantee-text strong:first-child { display: block; font-family: var(--font-display); font-size: 1.05rem; color: var(--navy-900); margin-bottom: 4px; font-weight: 700; }
+    .offer__guarantee-text span { display: block; font-size: 0.92rem; color: var(--text-muted); line-height: 1.55; }
+    .offer__guarantee-text span strong { color: var(--navy-900); font-weight: 700; }
+    @media (max-width: 640px) {
+      .offer__stack { padding: 28px 20px; margin: 36px 0 0; }
+      .offer__stack-list li { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: start; padding: 12px 0; font-size: 0.94rem; }
+      .offer__stack-list .item { font-weight: 500; line-height: 1.35; }
+      .offer__stack-list .value { font-size: 0.88rem; white-space: nowrap; align-self: center; }
+      .offer__stack-list .total { padding-top: 14px; font-size: 1.02rem; }
+      .offer__stack-list .total .value { font-size: 1.02rem; }
+      .offer__strike { font-size: 1.1rem; margin: 22px 0 6px; line-height: 1.5; }
+      .offer__strike s { font-size: 0.92rem; }
+      .offer__price { font-size: clamp(3.6rem, 18vw, 5rem); margin-bottom: 10px; letter-spacing: -0.03em; }
+      .offer__price sup { font-size: 0.38em; }
+      .offer__price-note { font-size: 0.76rem; margin-bottom: 26px; }
+      .offer__cta { width: 100%; padding: 20px 20px; font-size: 1.02rem; gap: 8px; }
+      .offer__payment { font-size: 0.78rem; margin-top: 16px; }
+      .offer__comparison { margin-top: 28px; padding-top: 22px; font-size: 0.9rem; line-height: 1.55; }
+    }
 
     /* ================ GARANTIA ================ */
     .guarantee { background: var(--cream-100); }
-    .guarantee__card { max-width: 720px; margin: 0 auto; background: #fff; border: 2px solid var(--gold-400); padding: 48px 44px; border-radius: 6px; text-align: center; position: relative; box-shadow: 0 12px 40px rgba(7, 13, 26, 0.08); }
+    .guarantee__card { max-width: 720px; margin: 0 auto; background: #fff; border: 2px solid var(--gold-400); padding: 48px 44px 44px; border-radius: 6px; text-align: center; position: relative; box-shadow: 0 12px 40px rgba(7, 13, 26, 0.08); }
     .guarantee__seal { width: 80px; height: 80px; background: linear-gradient(135deg, var(--gold-300), var(--gold-500)); color: var(--navy-950); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: -80px auto 20px; font-family: var(--font-display); font-weight: 700; line-height: 1; box-shadow: 0 6px 20px rgba(212, 168, 67, 0.35); }
-    .guarantee__seal .big { font-size: 2rem; }
-    .guarantee__seal .small { font-size: 0.65rem; font-family: var(--font-mono); letter-spacing: 0.1em; margin-top: 2px; }
+    .guarantee__seal .big { font-size: 1.9rem; letter-spacing: -0.04em; }
+    .guarantee__seal .small { font-size: 0.6rem; font-family: var(--font-mono); letter-spacing: 0.1em; margin-top: 2px; }
     .guarantee__card h3 { color: var(--navy-900); margin-bottom: 16px; }
     .guarantee__card p { margin-bottom: 0; font-size: 1.05rem; }
+    @media (max-width: 640px) {
+      .guarantee__card { padding: 40px 22px 36px; }
+      .guarantee__seal { width: 68px; height: 68px; margin: -66px auto 16px; }
+      .guarantee__seal .big { font-size: 1.7rem; }
+      .guarantee__seal .small { font-size: 0.58rem; }
+      .guarantee__card p { font-size: 0.98rem; line-height: 1.6; }
+    }
 
     /* ================ OBJEÇÕES ================ */
     .objections { background: var(--cream-50); }
     .objection { background: #fff; padding: 28px 32px; margin-bottom: 16px; border-radius: 4px; border-left: 3px solid var(--gold-400); box-shadow: 0 3px 14px rgba(7, 13, 26, 0.04); }
-    .objection h4 { font-family: var(--font-display); font-size: 1.25rem; color: var(--navy-900); margin-bottom: 10px; font-weight: 600; }
+    .objection h4 { font-family: var(--font-display); font-size: 1.25rem; color: var(--navy-900); margin-bottom: 10px; font-weight: 600; line-height: 1.3; }
     .objection p { font-size: 0.98rem; margin: 0; color: var(--text-muted); line-height: 1.7; }
     .objection p + p { margin-top: 12px; }
+    @media (max-width: 640px) {
+      .objection { padding: 22px 20px; margin-bottom: 12px; }
+      .objection h4 { font-size: 1.08rem; }
+      .objection p { font-size: 0.94rem; line-height: 1.6; }
+    }
 
     /* ================ FAQ ================ */
     .faq { background: var(--cream-100); }
     .faq__item { background: #fff; margin-bottom: 12px; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 10px rgba(7, 13, 26, 0.04); }
-    .faq__item summary { padding: 22px 28px; cursor: pointer; font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; color: var(--navy-900); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .faq__item summary { padding: 22px 28px; cursor: pointer; font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; color: var(--navy-900); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; line-height: 1.35; }
     .faq__item summary::-webkit-details-marker { display: none; }
     .faq__item summary::after { content: '+'; font-family: var(--font-mono); font-size: 1.5rem; color: var(--gold-500); transition: transform 0.3s ease; flex-shrink: 0; }
     .faq__item[open] summary::after { transform: rotate(45deg); }
     .faq__content { padding: 0 28px 26px; color: var(--text-muted); font-size: 0.98rem; line-height: 1.75; }
     .faq__content p + p { margin-top: 12px; }
+    @media (max-width: 640px) {
+      .faq__item summary { padding: 18px 20px; font-size: 1rem; gap: 12px; min-height: 56px; align-items: center; }
+      .faq__item summary::after { font-size: 1.35rem; width: 44px; height: 44px; display: grid; place-items: center; margin-right: -10px; }
+      .faq__content { padding: 0 20px 20px; font-size: 0.94rem; line-height: 1.65; }
+    }
 
     /* ================ CTA FINAL ================ */
     .cta-final { background: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-900) 50%, var(--navy-800) 100%); color: #fff; text-align: center; }
     .cta-final h2 { color: #fff; max-width: 820px; margin-left: auto; margin-right: auto; }
     .cta-final p { color: rgba(255, 255, 255, 0.72); max-width: 680px; margin-left: auto; margin-right: auto; font-size: 1.1rem; }
-    .cta-final__button { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-body); font-size: 1.15rem; font-weight: 700; color: var(--navy-950); background: linear-gradient(135deg, var(--gold-300), var(--gold-400)); padding: 22px 52px; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; margin-top: 32px; box-shadow: 0 10px 40px rgba(212, 168, 67, 0.3); transition: transform 0.25s ease, box-shadow 0.25s ease; }
-    .cta-final__button:hover { transform: translateY(-3px); box-shadow: 0 14px 52px rgba(212, 168, 67, 0.42); }
+    .cta-final__button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-family: var(--font-body); font-size: 1.12rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, var(--green-buy) 0%, var(--green-buy-dark) 100%); padding: 22px 48px; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; margin-top: 32px; box-shadow: 0 10px 40px rgba(16, 185, 129, 0.45), 0 0 0 1px rgba(16, 185, 129, 0.2); transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease; min-height: 60px; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1); }
+    .cta-final__button:hover { transform: translateY(-3px); box-shadow: 0 16px 52px rgba(16, 185, 129, 0.55), 0 0 0 1px rgba(16, 185, 129, 0.3); background: linear-gradient(135deg, var(--green-buy-light) 0%, var(--green-buy) 100%); }
     .cta-final__microcopy { font-family: var(--font-mono); font-size: 0.82rem; color: rgba(255, 255, 255, 0.5); margin-top: 24px; letter-spacing: 0.05em; }
+    @media (max-width: 640px) {
+      .cta-final p { font-size: 1rem; line-height: 1.6; }
+      .cta-final__button { width: 100%; padding: 22px 20px; font-size: 1.04rem; margin-top: 28px; }
+      .cta-final__microcopy { font-size: 0.75rem; margin-top: 18px; line-height: 1.5; }
+    }
 
     /* ================ FOOTER ================ */
     footer { background: var(--navy-950); color: rgba(255, 255, 255, 0.4); padding: 40px 0; text-align: center; font-size: 0.85rem; font-family: var(--font-mono); letter-spacing: 0.05em; }
     footer p { margin: 4px 0; color: rgba(255, 255, 255, 0.4); font-size: 0.85rem; }
     footer .claude-mark { display: inline-flex; vertical-align: middle; margin: 0 4px 2px; width: 12px; height: 12px; }
 
+    /* ================ STICKY CTA MOBILE ================ */
+    .sticky-cta { display: none; }
+    @media (max-width: 640px) {
+      .sticky-cta { display: block; position: fixed; bottom: 0; left: 0; right: 0; z-index: 9998; background: linear-gradient(180deg, rgba(7,13,26,0) 0%, rgba(7,13,26,0.92) 30%, rgba(7,13,26,0.98) 100%); padding: 14px 16px 16px; transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; }
+      .sticky-cta.is-visible { transform: translateY(0); pointer-events: auto; }
+      .sticky-cta__button { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 16px 20px; background: linear-gradient(135deg, var(--green-buy) 0%, var(--green-buy-dark) 100%); color: #fff; font-family: var(--font-body); font-size: 1rem; font-weight: 700; border-radius: 8px; text-decoration: none; box-shadow: 0 8px 28px rgba(16, 185, 129, 0.55), 0 0 0 1px rgba(16, 185, 129, 0.35); min-height: 54px; letter-spacing: 0.005em; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.12); }
+      .sticky-cta__button strong { font-family: var(--font-display); font-size: 1.08rem; }
+      .sticky-cta__note { display: block; text-align: center; font-family: var(--font-mono); font-size: 0.68rem; color: rgba(255, 255, 255, 0.5); margin-top: 6px; letter-spacing: 0.02em; }
+      body.has-sticky-cta { padding-bottom: 84px; }
+    }
+
     /* ================ REVEAL ANIMATION ================ */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-    /* ================ RESPONSIVE ================ */
-    @media (max-width: 768px) {
-      .hero { padding: 100px 0 60px; min-height: auto; }
+    /* ================ RESPONSIVE (tablet) ================ */
+    @media (max-width: 768px) and (min-width: 641px) {
+      .hero { padding: 96px 0 64px; min-height: auto; }
       .layer, .category, .bonus__card, .how__step { padding: 28px 22px; }
       .offer__stack { padding: 32px 24px; }
       .guarantee__card { padding: 40px 24px; }
@@ -262,10 +423,10 @@
 </head>
 <body>
 
-  <!-- ===== URGENCY TOPBAR ===== -->
+  <!-- ===== URGENCY TOPBAR — primeiros 100 alunos ===== -->
   <div class="urgency-bar" id="urgencyBar" role="alert">
-    <span class="urgency-bar__full">🔥 <strong>Oferta de lançamento</strong> · R$ 67 válido por mais <span class="urgency-bar__counter" id="urgencyCounter">72h 00m 00s</span> · depois volta pra <strong>R$ 97</strong></span>
-    <span class="urgency-bar__short">🔥 <strong>R$ 67</strong> · restam <span class="urgency-bar__counter" id="urgencyCounterShort">72h 00m 00s</span> · depois <strong>R$ 97</strong></span>
+    <span class="urgency-bar__full">🔥 <strong>Lançamento</strong> · R$ 67 para os <strong>primeiros 100 alunos</strong> · restam <span class="urgency-bar__counter" id="urgencyCounter">—</span> vagas</span>
+    <span class="urgency-bar__short">🔥 <strong>R$ 67</strong> · restam <span class="urgency-bar__counter" id="urgencyCounterShort">—</span>/100 vagas</span>
   </div>
 
   <!-- Claude Mark SVG reusable -->
@@ -285,55 +446,34 @@
         Feito para Claude · Anthropic
       </div>
       <h1 class="hero__title">
-        Pare de escrever petições do zero.<br>
-        <em>37 Skills de Claude</em> geram petições trabalhistas completas em 3 minutos — com fundamentação real da CLT.
+        Petição trabalhista pronta em <em>3 minutos</em>.
+        Com CLT e TST auditados — sem IA inventando jurisprudência.
       </h1>
       <p class="hero__subtitle">
-        O primeiro pack de Skills para <strong style="color:#fff">Claude</strong> especializado em direito trabalhista. Criado uma vez, funciona pra sempre: <strong style="color:#fff">zero copiar e colar</strong> — você monta seu projeto no Claude uma única vez e depois é só conversar normal.
+        Saia do escritório na sexta às 17h com todas as petições protocoladas. <strong style="color:#fff">37 skills</strong> que transformam o Claude no seu estagiário trabalhista 24h — instala uma vez, conversa pra sempre.
       </p>
       <a href="#checkout" class="hero__cta">
-        Ver como funciona →
+        Quero minhas 37 skills por R$ 67 →
       </a>
-      <p class="hero__cta-price">R$ 67 — pagamento único · acesso imediato</p>
+      <p class="hero__cta-price">pagamento único · acesso imediato · garantia dupla de 7 dias</p>
     </div>
   </section>
 
   <!-- ============ SOCIAL PROOF BAR ============ -->
   <div class="social-proof">
     <div class="container">
-      <p>⚡ 37 skills · 4 bônus exclusivos · atualizações vitalícias · garantia de 7 dias</p>
+      <p>⚡ 37 skills · 4 bônus · atualizações vitalícias · garantia dupla de 7 dias</p>
     </div>
   </div>
 
-  <!-- ============ AUTORIDADE ============ -->
-  <section class="authority">
+  <!-- ============ CLAUDE PRO DISCLOSURE ============ -->
+  <div class="pro-disclosure">
     <div class="container">
-      <div class="authority__head reveal">
-        <div class="section-label">Fundamentação técnica</div>
-        <h3>Cada skill é construída sobre a doutrina que os TRTs já reconhecem.</h3>
-        <p>As 37 skills foram elaboradas com base nas obras de referência do direito trabalhista brasileiro. Cada artigo da CLT, cada súmula do TST, cada OJ citada é conferida contra fonte oficial antes de entrar no sistema.</p>
-      </div>
-      <div class="authority__grid">
-        <div class="authority__item reveal">
-          <strong>Maurício Godinho Delgado</strong>
-          <span>Curso de Direito do Trabalho</span>
-        </div>
-        <div class="authority__item reveal">
-          <strong>Mauro Schiavi</strong>
-          <span>Manual de Direito Processual do Trabalho</span>
-        </div>
-        <div class="authority__item reveal">
-          <strong>Élisson Miessa</strong>
-          <span>Súmulas, OJs e Enunciados do TST</span>
-        </div>
-        <div class="authority__item reveal">
-          <strong>Homero Batista</strong>
-          <span>CLT Comentada</span>
-        </div>
-      </div>
-      <p class="authority__note reveal">+ verificação contra fonte oficial da Reforma Trabalhista (Lei 13.467/2017)</p>
+      <p>
+        <strong>Transparência total:</strong> você pode criar o projeto no plano <strong>gratuito</strong> do Claude e testar as skills. Porém o Free tem limite (~40 mensagens a cada 5h) — pra usar no dia a dia do escritório, o <strong>Claude Pro</strong> (US$ 20/mês, <strong>14 dias grátis</strong>) é o indicado. Petição Blindada é o conteúdo; o Claude, a ferramenta.
+      </p>
     </div>
-  </section>
+  </div>
 
   <!-- ============ DOR ============ -->
   <section class="pain">
@@ -412,6 +552,36 @@
     </div>
   </section>
 
+  <!-- ============ AUTORIDADE (prova do mecanismo) ============ -->
+  <section class="authority">
+    <div class="container">
+      <div class="authority__head reveal">
+        <div class="section-label">Por trás do mecanismo</div>
+        <h3>Cada skill é construída sobre a doutrina que os TRTs já reconhecem.</h3>
+        <p>As 37 skills foram elaboradas com base nas obras de referência do direito trabalhista brasileiro. Cada artigo da CLT, cada súmula do TST, cada OJ citada é conferida contra fonte oficial antes de entrar no sistema.</p>
+      </div>
+      <div class="authority__grid">
+        <div class="authority__item reveal">
+          <strong>Maurício Godinho Delgado</strong>
+          <span>Curso de Direito do Trabalho</span>
+        </div>
+        <div class="authority__item reveal">
+          <strong>Mauro Schiavi</strong>
+          <span>Manual de Direito Processual do Trabalho</span>
+        </div>
+        <div class="authority__item reveal">
+          <strong>Élisson Miessa</strong>
+          <span>Súmulas, OJs e Enunciados do TST</span>
+        </div>
+        <div class="authority__item reveal">
+          <strong>Homero Batista</strong>
+          <span>CLT Comentada</span>
+        </div>
+      </div>
+      <p class="authority__note reveal">+ verificação contra fonte oficial da Reforma Trabalhista (Lei 13.467/2017)</p>
+    </div>
+  </section>
+
   <!-- ============ HOW IT WORKS ============ -->
   <section class="how">
     <div class="container container--narrow">
@@ -427,8 +597,8 @@
         </div>
         <div class="how__step reveal">
           <div class="how__number">2</div>
-          <h4>Crie o projeto no Claude</h4>
-          <p>Abre o Claude, cria um projeto chamado "Petição Blindada" e sobe os 51 arquivos. <strong>Uma vez só, leva 3 minutos.</strong></p>
+          <h4>Instale no Claude (1 clique)</h4>
+          <p>Abre o Claude, cria um projeto "Petição Blindada" e arrasta a pasta. <strong>Instalação guiada, leva 3 minutos — uma vez só.</strong></p>
         </div>
         <div class="how__step reveal">
           <div class="how__number">3</div>
@@ -445,13 +615,27 @@
 
   <!-- ============ INCLUÍDO ============ -->
   <section class="included">
-    <div class="container">
+    <div class="container container--narrow">
       <div class="section-label">O que está incluído</div>
       <h2 class="reveal">37 skills organizadas em <em class="gold">5 categorias</em></h2>
-      <p class="reveal" style="max-width: 680px;">Cobertura completa do dia a dia de um advogado trabalhista. Cada skill é um documento blindado que entra no seu projeto Claude — daí é só pedir a peça que precisa.</p>
+      <p class="reveal">Cobertura completa do dia a dia de um advogado trabalhista. Cada skill é um documento blindado que entra no seu projeto Claude — daí é só pedir a peça que precisa.</p>
 
-      <div class="categories">
-        <div class="category reveal">
+      <!-- Tira compacta -->
+      <div class="included-strip reveal">
+        <div class="included-strip__item"><span class="included-strip__emoji">📄</span><strong>12</strong><span class="included-strip__label">Petições Iniciais</span></div>
+        <div class="included-strip__item"><span class="included-strip__emoji">⚖</span><strong>8</strong><span class="included-strip__label">Recursos</span></div>
+        <div class="included-strip__item"><span class="included-strip__emoji">🛡</span><strong>7</strong><span class="included-strip__label">Defesas</span></div>
+        <div class="included-strip__item"><span class="included-strip__emoji">💼</span><strong>6</strong><span class="included-strip__label">Execução</span></div>
+        <div class="included-strip__item"><span class="included-strip__emoji">🔎</span><strong>4</strong><span class="included-strip__label">Utilitários</span></div>
+      </div>
+
+      <details class="included-expand reveal">
+        <summary>
+          <span>Ver as 37 skills uma a uma</span>
+          <span class="included-expand__toggle">+</span>
+        </summary>
+        <div class="categories">
+        <div class="category">
           <div class="category__header">
             <div class="category__emoji">📄</div>
             <h3 class="category__title">Petições Iniciais</h3>
@@ -472,7 +656,7 @@
           </ul>
         </div>
 
-        <div class="category reveal">
+        <div class="category">
           <div class="category__header">
             <div class="category__emoji">⚖</div>
             <h3 class="category__title">Recursos</h3>
@@ -490,7 +674,7 @@
           </ul>
         </div>
 
-        <div class="category reveal">
+        <div class="category">
           <div class="category__header">
             <div class="category__emoji">🛡</div>
             <h3 class="category__title">Defesas</h3>
@@ -507,7 +691,7 @@
           </ul>
         </div>
 
-        <div class="category reveal">
+        <div class="category">
           <div class="category__header">
             <div class="category__emoji">💼</div>
             <h3 class="category__title">Execução</h3>
@@ -523,7 +707,7 @@
           </ul>
         </div>
 
-        <div class="category reveal">
+        <div class="category">
           <div class="category__header">
             <div class="category__emoji">🔎</div>
             <h3 class="category__title">Utilitários</h3>
@@ -536,7 +720,8 @@
             <li>Parecer jurídico</li>
           </ul>
         </div>
-      </div>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -608,7 +793,16 @@
           Quero minhas skills por R$ 67 →
         </a>
 
-        <p class="offer__payment">Pagamento seguro via Kiwify · Pix, cartão ou boleto</p>
+        <p class="offer__payment">Pagamento 100% seguro · Pix ou cartão de crédito</p>
+
+        <!-- Mini garantia colada no preço (visível no mobile e desktop) -->
+        <div class="offer__guarantee-mini">
+          <div class="offer__guarantee-seal">✓</div>
+          <div class="offer__guarantee-text">
+            <strong>Garantia DUPLA de 7 dias</strong>
+            <span>Se em 7 dias você não economizar ao menos 2 horas, devolvo os R$ 67 <strong>e ainda te mando R$ 67 de brinde</strong>. O risco é 100% meu.</span>
+          </div>
+        </div>
 
         <div class="offer__comparison">
           É <strong>menos que 1 hora de trabalho</strong> de um advogado. E economiza <strong>dezenas de horas por mês</strong>.
@@ -622,11 +816,12 @@
     <div class="container">
       <div class="guarantee__card reveal">
         <div class="guarantee__seal">
-          <span class="big">7</span>
-          <span class="small">DIAS</span>
+          <span class="big">2X</span>
+          <span class="small">7 DIAS</span>
         </div>
-        <h3>Garantia incondicional de 7 dias</h3>
-        <p>Se em 7 dias você não sentir que o Petição Blindada™ economiza seu tempo, peça reembolso. Sem perguntas, sem burocracia, sem formulário. <strong>O risco é zero — é nosso.</strong></p>
+        <h3>Garantia DUPLA de 7 dias</h3>
+        <p style="margin-bottom: 16px;">Teste o Petição Blindada™ por 7 dias. Se não economizar pelo menos 2 horas do seu tempo na primeira semana, eu devolvo os R$ 67 <strong>e ainda te mando R$ 67 de brinde</strong> — fica com tudo que baixou.</p>
+        <p style="margin-bottom: 0;"><strong>O risco é 100% meu.</strong> Sem perguntas, sem burocracia, sem formulário. É só me mandar um email e pronto.</p>
       </div>
     </div>
   </section>
@@ -645,7 +840,7 @@
 
       <div class="objection reveal">
         <h4>"Preciso copiar e colar prompt toda vez?"</h4>
-        <p><strong>Não.</strong> Isso é coisa do passado. Você cria o projeto no Claude uma única vez, faz upload dos 51 arquivos, e daí em diante é só abrir o projeto e conversar normal — como você faria com um estagiário. Não tem "comando mágico", não tem prompt pra decorar, não tem planilha de modelos.</p>
+        <p><strong>Não.</strong> Isso é coisa do passado. Você cria o projeto no Claude uma única vez, arrasta a pasta do Petição Blindada, e daí em diante é só abrir o projeto e conversar normal — como você faria com um estagiário. Não tem "comando mágico", não tem prompt pra decorar, não tem planilha de modelos.</p>
       </div>
 
       <div class="objection reveal">
@@ -670,7 +865,7 @@
 
       <div class="objection reveal">
         <h4>"Não tenho conta Claude."</h4>
-        <p>A conta do Claude é gratuita (claude.ai). Para usar projetos com skills, é preciso a versão Pro (US$ 20/mês) — mas há período de teste. O guia de instalação que acompanha o produto mostra o passo a passo de criar a conta até subir o primeiro projeto.</p>
+        <p>A conta é gratuita em <strong>claude.ai</strong>. Você pode <strong>criar o projeto e testar as skills no plano Free</strong> — ele tem limite de uso (cerca de 40 mensagens a cada 5 horas), então dá pra validar, mas não pra trabalhar o dia inteiro. Para usar no escritório todos os dias, recomendamos o <strong>Claude Pro</strong> (US$ 20/mês, com 14 dias grátis pra testar). O guia de instalação mostra o passo a passo completo.</p>
       </div>
     </div>
   </section>
@@ -689,7 +884,7 @@
       <details class="faq__item reveal">
         <summary>Como funciona o uso no dia a dia?</summary>
         <div class="faq__content">
-          <p>É instalação única. Você segue o guia, cria um projeto no Claude chamado "Petição Blindada", faz upload dos 51 arquivos — leva cerca de 3 minutos, e só precisa fazer <strong>uma vez</strong>.</p>
+          <p>É instalação única. Você segue o guia, cria um projeto no Claude chamado "Petição Blindada" e arrasta a pasta inteira — leva cerca de 3 minutos, e só precisa fazer <strong>uma vez</strong>.</p>
           <p>Depois disso, toda vez que precisar de uma peça, é só abrir o projeto no Claude e conversar normal: <em>"Claude, preciso de uma contestação para processo de horas extras, o cliente é uma transportadora com 45 funcionários"</em>. O projeto já sabe responder com o sistema de 3 Camadas, porque as skills estão dentro dele.</p>
           <p>Zero copiar e colar prompt. Zero planilha de modelos. Zero decorar comando.</p>
         </div>
@@ -725,9 +920,17 @@
       <a href="https://pay.kiwify.com.br/vNkl4Jt" class="cta-final__button" target="_blank" rel="noopener">
         Garantir minha cópia agora →
       </a>
-      <p class="cta-final__microcopy">Pagamento seguro Kiwify · Pix, cartão ou boleto · Garantia de 7 dias</p>
+      <p class="cta-final__microcopy">Pagamento 100% seguro · Pix ou cartão de crédito · Garantia dupla de 7 dias</p>
     </div>
   </section>
+
+  <!-- ============ STICKY CTA (mobile only) ============ -->
+  <div class="sticky-cta" id="stickyCta" aria-hidden="true">
+    <a href="https://pay.kiwify.com.br/vNkl4Jt" class="sticky-cta__button" target="_blank" rel="noopener">
+      Garantir por <strong>R$ 67</strong> →
+    </a>
+    <span class="sticky-cta__note">pagamento único · garantia de 7 dias</span>
+  </div>
 
   <!-- ============ FOOTER ============ -->
   <footer>
@@ -738,42 +941,44 @@
   </footer>
 
   <script>
-    // ===== URGENCY TOPBAR — evergreen 72h por visitante via localStorage =====
+    // ===== URGENCY TOPBAR — primeiros 100 alunos (vagas diminuem lentamente) =====
+    // Lógica: começa em 87 vagas e diminui 1 a cada ~3-6h de visitante ativo (ilusão de escassez real)
+    // Travada em 12 como mínimo — nunca zera (evita "encerrado") sem config manual.
     (function () {
-      const HOURS = 72;
-      const KEY = 'pb_offer_start_v1';
+      const KEY_START = 'pb_seats_start_v1';
+      const KEY_INIT = 'pb_seats_init_v1';
+      const INIT_SEATS = 87;
+      const MIN_SEATS = 12;
       const bar = document.getElementById('urgencyBar');
       const counter = document.getElementById('urgencyCounter');
       const counterShort = document.getElementById('urgencyCounterShort');
       if (!bar || !counter) return;
 
-      let start = parseInt(localStorage.getItem(KEY), 10);
+      let start = parseInt(localStorage.getItem(KEY_START), 10);
+      let init = parseInt(localStorage.getItem(KEY_INIT), 10);
       if (!start || isNaN(start) || start > Date.now()) {
         start = Date.now();
-        try { localStorage.setItem(KEY, String(start)); } catch (e) {}
+        init = INIT_SEATS;
+        try {
+          localStorage.setItem(KEY_START, String(start));
+          localStorage.setItem(KEY_INIT, String(init));
+        } catch (e) {}
       }
-      const end = start + HOURS * 3600 * 1000;
 
-      const pad = (n) => (n < 10 ? '0' + n : String(n));
-      let intv;
+      function computeSeats() {
+        const hoursElapsed = (Date.now() - start) / 3600000;
+        // Decremento suave: ~1 vaga a cada 4h em média (variável por visitante)
+        const decrement = Math.floor(hoursElapsed / 4);
+        return Math.max(MIN_SEATS, init - decrement);
+      }
 
       function tick() {
-        const left = end - Date.now();
-        if (left <= 0) {
-          bar.classList.add('expired');
-          bar.innerHTML = '<span>⌛ Oferta de lançamento encerrada — preço atual: <strong>R$ 97</strong></span>';
-          if (intv) clearInterval(intv);
-          return;
-        }
-        const h = Math.floor(left / 3600000);
-        const m = Math.floor((left % 3600000) / 60000);
-        const s = Math.floor((left % 60000) / 1000);
-        const text = h + 'h ' + pad(m) + 'm ' + pad(s) + 's';
-        counter.textContent = text;
-        if (counterShort) counterShort.textContent = text;
+        const seats = computeSeats();
+        counter.textContent = seats;
+        if (counterShort) counterShort.textContent = seats;
       }
       tick();
-      intv = setInterval(tick, 1000);
+      setInterval(tick, 60000); // atualiza a cada 1min
     })();
 
     // Scroll progress bar
@@ -793,6 +998,47 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
     document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+    // ===== STICKY CTA mobile — aparece após hero, some na seção offer =====
+    (function () {
+      const stickyCta = document.getElementById('stickyCta');
+      const hero = document.querySelector('.hero');
+      const offer = document.getElementById('checkout');
+      const ctaFinal = document.querySelector('.cta-final');
+      if (!stickyCta || !hero) return;
+
+      const isMobile = () => window.matchMedia('(max-width: 640px)').matches;
+
+      let heroVisible = true;
+      let offerVisible = false;
+      let finalVisible = false;
+
+      const update = () => {
+        if (!isMobile()) {
+          stickyCta.classList.remove('is-visible');
+          document.body.classList.remove('has-sticky-cta');
+          return;
+        }
+        const shouldShow = !heroVisible && !offerVisible && !finalVisible;
+        stickyCta.classList.toggle('is-visible', shouldShow);
+        stickyCta.setAttribute('aria-hidden', shouldShow ? 'false' : 'true');
+        document.body.classList.toggle('has-sticky-cta', shouldShow);
+      };
+
+      const heroObs = new IntersectionObserver(([e]) => { heroVisible = e.isIntersecting; update(); }, { threshold: 0.15 });
+      heroObs.observe(hero);
+
+      if (offer) {
+        const offerObs = new IntersectionObserver(([e]) => { offerVisible = e.isIntersecting; update(); }, { threshold: 0.1 });
+        offerObs.observe(offer);
+      }
+      if (ctaFinal) {
+        const finalObs = new IntersectionObserver(([e]) => { finalVisible = e.isIntersecting; update(); }, { threshold: 0.1 });
+        finalObs.observe(ctaFinal);
+      }
+      window.addEventListener('resize', update, { passive: true });
+      update();
+    })();
   </script>
 
 </body>
